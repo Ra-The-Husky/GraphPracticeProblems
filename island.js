@@ -1,55 +1,69 @@
 function getNeighbors(row, col, graph) {
-  const valid = []
-  const currNode = graph[row][col]
+  const valid = [];
   // Check top
-  if(graph[row-1][col] === 1 && row > 0){
-    valid.push([row-1,col])
-    console.log("this is top",graph[row-1][col])
+  if (row > 0 && graph[row - 1][col] === 1) {
+    valid.push([row - 1, col]);
+    // console.log("this is top",graph[row-1][col])
   }
-   // Check right
-  if(graph[row][col+1] === 1 && col<graph[row].length-1){
-    valid.push([row,col+1])
-    console.log("this is right",graph[row][col+1])
+  //Check right
+  if (col < graph[row].length - 1 && graph[row][col + 1] === 1) {
+    valid.push([row, col + 1]);
+    // console.log("this is right",graph[row][col+1])
   }
-  //check bottom
-  if(graph[row+1][col] === 1 && row > 0){
-    valid.push([row+1,col])
-    console.log("this is bottom",graph[row+1][col])
+  //Check bottom
+  if (row < graph.length - 1 && graph[row + 1][col] === 1) {
+    valid.push([row + 1, col]);
+    // console.log("this is bottom",graph[row+1][col])
   }
-  // // Check left
-  if(graph[row][col-1] === 1 && col>0){
-    valid.push([row][col-1])
-    console.log("this is right",[row][col-1])
+  //Check left
+  if (col > 0 && graph[row][col - 1] === 1) {
+    valid.push([row, col - 1]);
+    // console.log("this is right",[row][col-1])
   }
 
-  return valid
+  return valid;
 }
-
 
 function islandSize(row, col, graph) {
-
-  // Create a visited set to store visited nodes
-
   // Create a stack, put the starting node in the stack
-
-  // Put the stringified starting node in visited
-
-  // Initialize size to 0
-
+  const stack = [[row, col]];
+  // Create a visited set to store visited nodes
+  const visited = new Set();
+  // Put the stringified starting node in visited `${r}, ${c}`
+  visited.add(`${row}, ${col}`);
+  // Initialize size to 0 let size = 0
+  let size = 0;
   // While the stack is not empty,
-
+  while (stack.length) {
     // Pop the first node
-
+    const currNode = stack.pop();
+    const currRow = currNode[0];
+    const currCol = currNode[1];
     // DO THE THING (increment size by 1)
+    if (graph[currRow][currCol] === 1) size++;
 
-    // Then push all the UNVISITED neighbors on top of the stack
-    // and mark them as visited
     // HINT: This is what your helper function `getNeighbors` is for
-    // HINT: Remember, you're storing your visited nodes as strings!
+    const neighbors = getNeighbors(currRow, currCol, graph);
 
-  // return size
+    neighbors.forEach((neighbor) => {
+      const strCoords = `${neighbor[0]}, ${neighbor[1]}`;
 
-  // Your code here
+      if (!visited.has(strCoords)) {
+        // Then push all the UNVISITED neighbors on top of the stack visitor.forEach()
+        stack.push(neighbor);
+        // and mark them as visited
+        // HINT: Remember, you're storing your visited nodes as strings!
+        visited.add(strCoords);
+      }
+    });
+  }
+  return size;
 }
 
+matrix = [
+  [1, 1, 1, 0, 0],
+  [0, 1, 1, 0, 1],
+  [0, 1, 1, 0, 1],
+];
+// console.log(islandSize(2, 1, matrix))
 module.exports = [getNeighbors, islandSize];
