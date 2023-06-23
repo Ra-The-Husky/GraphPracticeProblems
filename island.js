@@ -1,16 +1,28 @@
 function getNeighbors(row, col, graph) {
-
+  const valid = []
+  const currNode = graph[row][col]
   // Check top
+  if(graph[row-1][col] === 1 && row > 0){
+    valid.push([row-1,col])
+    console.log("this is top",graph[row-1][col])
+  }
+   // Check right
+  if(graph[row][col+1] === 1 && col<graph[row].length-1){
+    valid.push([row,col+1])
+    console.log("this is right",graph[row][col+1])
+  }
+  //check bottom
+  if(graph[row+1][col] === 1 && row > 0){
+    valid.push([row+1,col])
+    console.log("this is bottom",graph[row+1][col])
+  }
+  // // Check left
+  if(graph[row][col-1] === 1 && col>0){
+    valid.push([row][col-1])
+    console.log("this is right",[row][col-1])
+  }
 
-  // Check bottom
-
-  // Check left
-
-  // Check right
-
-  // Return neighbors
-
-  // Your code here
+  return valid
 }
 
 
